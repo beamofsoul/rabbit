@@ -1,0 +1,32 @@
+{"properties": [
+  {
+    "name": "swagger.api.title",
+    "type": "java.lang.String",
+    "description": "A description for 'swagger.api.title'"
+  },
+  {
+    "name": "swagger.api.description",
+    "type": "java.lang.String",
+    "description": "A description for 'swagger.api.description'"
+  },
+  {
+    "name": "swagger.api.version",
+    "type": "java.lang.String",
+    "description": "A description for 'swagger.api.version'"
+  },
+  {
+    "name": "swagger.api.author.name",
+    "type": "java.lang.String",
+    "description": "A description for 'swagger.api.author.name'"
+  },
+  {
+    "name": "swagger.api.author.url",
+    "type": "java.lang.String",
+    "description": "A description for 'swagger.api.author.url'"
+  },
+  {
+    "name": "swagger.api.author.email",
+    "type": "java.lang.String",
+    "description": "A description for 'swagger.api.author.email'"
+  }
+]}

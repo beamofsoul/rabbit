@@ -1,0 +1,15 @@
+spring:
+  profiles:
+    active:
+    - dev
+
+swagger:
+  api:
+    title: Rabbit API Documentation
+    description: An Api documentation of an integrated development environment that based on Spring Boot
+    version: 1.0
+    author:
+      name: Mingshu Jian
+      url: https://github.com/beamofsoul/rabbit
+      email: beamofsoul@sina.com
+      
