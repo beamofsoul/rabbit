@@ -131,12 +131,6 @@
 		    <version>${swagger.version}</version>
 		</dependency>
 		
-		<!-- groovy支持-->
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-		</dependency>
-
 		<!-- Tools -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
