@@ -1,7 +1,15 @@
 spring:
+  mvc:
+    static-path-pattern: /static/**
   profiles:
     active:
-    - dev
+      - dev
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    servlet:
+      content-type: text/html; charset=utf-8
 
 swagger:
   api:
@@ -28,7 +36,6 @@ project:
       adminRoles:
         - ADMIN
         - MANAGER
-      #  - NORMAL
       # Allows adding RequestMatcher instances that do not to be required to login
       nonAuthenticatedMatchers:
         - /**

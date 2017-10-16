@@ -1,5 +1,3 @@
-debug: false
-
 spring:
   datasource:
     primary:
@@ -25,11 +23,11 @@ spring:
       connection-timeout: 60000 # 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒
       idle-timeout: 600000 #一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟
   jpa:
-    generate-ddl: true
+    generate-ddl: false
     show-sql: true
     hibernate:
       use-new-id-generator-mappings: false 
-      ddl-auto: update
+      ddl-auto: none
       naming:
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
@@ -37,13 +35,6 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
   main:
-    banner-mode: "off"
-  mvc:
-    static-path-pattern: /static/**
+    banner-mode: "on"
   thymeleaf:
-    prefix: classpath:/templates/
-    suffix: .html
-    mode: HTML
-    servlet:
-      content-type: text/html; charset=utf-8
-    cache: false
+    cache: true
