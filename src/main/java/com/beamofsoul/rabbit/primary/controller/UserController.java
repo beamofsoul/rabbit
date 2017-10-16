@@ -1,6 +1,5 @@
 package com.beamofsoul.rabbit.primary.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.beamofsoul.rabbit.primary.entity.User;
-import com.beamofsoul.rabbit.primary.repository.UserRepository;
+import com.beamofsoul.rabbit.primary.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -28,37 +27,37 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
-	
+
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 	
 	@ApiOperation(value = "创建用户", notes = "根据User对象创建用户")
 	@PostMapping("/add")
 	public User createUser(@RequestBody User user) {
-		return userRepository.save(user);
+		return userService.create(user);
 	}
 
 	@ApiOperation(value="获取所有用户详细信息", notes="获取用户信息列表")
 	@GetMapping("/list")
 	public List<User> getAllUsers() {
-		return userRepository.findAll();
+		return userService.get();
 	}
 	
 	@ApiOperation(value="获取用户详细信息列表", notes="根据一组用户ID获取对应的用户信息列表")
 	@GetMapping("/{ids}")
 	public List<User> getUsers(@PathVariable Long... ids) {
-		return userRepository.findAllById(Arrays.asList(ids));
+		return userService.get(ids);
 	}
 	
 	@ApiOperation(value = "更新用户", notes = "根据User对象更新用户")
 	@PutMapping("/update")
 	public User updateUser(@RequestBody User user) {
-		return userRepository.saveAndFlush(user);
+		return userService.update(user);
 	}
 	
 	@ApiOperation(value="删除用户", notes="根据用户ID删除对应的用户信息")
 	@DeleteMapping("/{id}")
 	public void deleteUser(@PathVariable Long id) {
-		userRepository.deleteById(id);
+		userService.delete(id);
 	}
 }
