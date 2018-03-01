@@ -2,9 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:th="http://www.thymeleaf.org"  
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-    <style>
-		div {text-align: right}
-	</style>
 <body>
 	<div>
 		<div sec:authorize="isAuthenticated()">
@@ -17,7 +14,7 @@
 		</div>
 	
 		<div th:if="${session.CURRENT_USER==null}">
-			<a href="/login">Login</a>
+			<a th:href="@{login}"> Login</a>
 		</div>
 	</div>
 </body>
