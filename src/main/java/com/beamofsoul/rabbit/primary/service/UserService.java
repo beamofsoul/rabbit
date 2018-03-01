@@ -11,6 +11,7 @@ import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 public interface UserService {
+	
 	User create(User instance);
 	User update(User instance);
 	long delete(Long... instanceIds);
@@ -19,5 +20,9 @@ public interface UserService {
 	Page<User> get(Pageable pageable);
 	Page<User> get(Pageable pageable, Predicate predicate);
 	List<User> get();
-	BooleanExpression search(JSONObject condition);
+	BooleanExpression search(JSONObject conditions);
+	
+	User get(String username);
+	boolean isUsernameUnique(String username, Long userId);
+	boolean isNicknameUnique(String nickname, Long userId);
 }

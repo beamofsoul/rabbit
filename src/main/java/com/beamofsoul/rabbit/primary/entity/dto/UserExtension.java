@@ -24,12 +24,14 @@ public class UserExtension extends User {
 
 	private Long userId;
 	private String nickname;
+	private String photoString;
 
-	public UserExtension(Long userId, String username, String password, String nickname, boolean enabled,
+	public UserExtension(Long userId, String username, String password, String nickname, String photoString, boolean enabled,
 			boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		this.userId = userId;
 		this.nickname = nickname;
+		this.photoString = photoString;
 	}
 }

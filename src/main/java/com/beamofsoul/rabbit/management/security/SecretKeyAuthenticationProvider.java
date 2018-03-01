@@ -41,14 +41,15 @@ public class SecretKeyAuthenticationProvider implements AuthenticationProvider {
 	 */
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		UserDetails user = authenticationUserDetailsService.loadUserByUsername(authentication.getName());
+		final UserDetails user = authenticationUserDetailsService.loadUserByUsername(authentication.getName());
 
 		// whether login by remember-me functionality
+		final UsernameNotFoundException wrongPasswordException = new UsernameNotFoundException("Password is wrong");
 		if (authentication.getPrincipal() instanceof UserExtension) {
 			if (!((UserExtension) authentication.getPrincipal()).getPassword().equals(user.getPassword()))
-				throw new UsernameNotFoundException("密码错误");
+				throw wrongPasswordException;
 		} else if (!authentication.getCredentials().equals(user.getPassword())) {
-			throw new UsernameNotFoundException("密码错误");
+			throw wrongPasswordException;
 		}
 
 		UsernamePasswordAuthenticationToken result = 

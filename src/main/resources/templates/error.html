@@ -14,7 +14,7 @@
 				<div th:switch="${status}">
 					<span th:case="403" th:text="'You Have No Permissions To Access The Resource That You Expect'"></span>
 					<span th:case="404" th:text="'Could Not Find The Page That You Want To Access'"></span>
-					<span th:case="500" th:text="'An ' + ${error} + ' Occurred, ' + ${message}'"></span>
+					<span th:case="500" th:text="'An ' + ${error} + ' Occurred, ' + ${message}"></span>
 					<span th:case="*" th:text="'An Unknown Exception Or Error Occurred'"></span>
 				</div>
 			</li>

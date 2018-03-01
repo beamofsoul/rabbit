@@ -10,7 +10,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
-import com.beamofsoul.rabbit.management.util.ConfigurationReader;
+import com.beamofsoul.rabbit.management.system.ConfigurationReader;
 
 /**
  * @ClassName PropertyAnnotationBeanPostProcessor

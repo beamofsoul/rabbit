@@ -116,6 +116,17 @@ public class BaseMultielementRepositoryImpl<T,ID extends Serializable> extends Q
 	}
 	
 	/**
+	 * @Title: findOne  
+	 * @Description: 根据业务实体类主键获取符合条件的业务实体类实例
+	 * @param id 业务实体类的主键
+	 * @return T 查询到的业务实体类实例
+	 */
+	@Override
+	public T findOne(ID id) {
+		return queryOneByPredicate(((SimpleExpression<ID>)idPath).eq(id));
+	}
+	
+	/**
 	 * @Title: findByPredicateAndSort  
 	 * @Description: 根据业务实体类查询条件和排序条件获取符合条件的业务实体类实例列表
 	 * @param predicate 业务实体类的查询条件对象
@@ -148,6 +159,18 @@ public class BaseMultielementRepositoryImpl<T,ID extends Serializable> extends Q
 	@Override
 	public QueryResults<ID> findPageableIds(Pageable pageable, Predicate predicate) {
 		JPAQuery<T> query = initQuery(entityManager, entityPath, pageable, predicate);
+		query.select(idPath);
+		return (QueryResults<ID>) query.fetchResults();
+	}
+	
+	/**
+	 * @Title: findAllIds  
+	 * @Description: 查询当前泛型业务实体类所有的主键ID
+	 * @return QueryResults<ID> 查询到的业务实体类主键ID列表
+	 */
+	@Override
+	public QueryResults<ID> findAllIds() {
+		JPAQuery<T> query = newQuery(entityManager, entityPath);
 		query.select(idPath);
 		return (QueryResults<ID>) query.fetchResults();
 	}

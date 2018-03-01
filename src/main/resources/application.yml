@@ -10,6 +10,10 @@ spring:
     mode: HTML
     servlet:
       content-type: text/html; charset=utf-8
+  cache:
+    cache-names: es
+    ehcache:
+      config: classpath:ehcache.xml
 
 swagger:
   api:
@@ -25,7 +29,13 @@ logging:
   config: classpath:logback.xml
   
 project:
+  user:
+    photo-path: D://rabbit//user_files//user_photo
   base:
+    repository:
+      provider: com.beamofsoul.rabbit.management.repository.BaseMultielementRepositoryFactory
+      batch:
+        size: 30
     security:
       # Specifies the URLs to be required to login as the roles "adminRoles" matched 
       adminRoleMatchers:

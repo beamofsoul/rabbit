@@ -9,15 +9,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-//import com.beamofsoul.bip.entity.Login;
-//import com.beamofsoul.bip.entity.User;
-//import com.beamofsoul.bip.management.util.ClientInformationUtils;
-//import com.beamofsoul.bip.service.LoginService;
+import com.beamofsoul.rabbit.management.util.ClientInformationUtils;
+import com.beamofsoul.rabbit.primary.entity.Login;
+import com.beamofsoul.rabbit.primary.entity.User;
 import com.beamofsoul.rabbit.primary.entity.dto.UserExtension;
+import com.beamofsoul.rabbit.primary.service.LoginService;
 
 /**
  * 
@@ -30,8 +31,8 @@ import com.beamofsoul.rabbit.primary.entity.dto.UserExtension;
 @Component
 public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
-//	@Autowired
-//	private LoginService logService;
+	@Autowired
+	private LoginService logService;
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -43,29 +44,29 @@ public class AuthenticationSuccessHandler extends SavedRequestAwareAuthenticatio
 		if (!isCurrentUserExist(request.getSession())) {
 			UserExtension ux = (UserExtension) authentication.getDetails();			
 			saveCurrentUser(request.getSession(), ux);
-//			request.getSession().setAttribute("currentLogin", new LoginRecordHandler().saveLoginRecord(new User(ux.getUserId()), request, response));
+			request.getSession().setAttribute("currentLogin", new LoginRecordHandler().saveLoginRecord(new User(ux.getUserId()), request, response));
 		}
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 	
-//	public class LoginRecordHandler{
-//		
-//		public Login saveLoginRecord(User currentUser, HttpServletRequest request, HttpServletResponse response) {
-//			Login login = new Login();
-//	        login.setUser(currentUser);
-//	        
-//	        try {
-//				login.setIpAddress(ClientInformationUtils.getIpAddress(request));
-//				login.setOperatingSystem(ClientInformationUtils.getOperatingSystem(request));
-//		        login.setBrowser(ClientInformationUtils.getBrowser(request));
-//		        login.setBrand(ClientInformationUtils.getBrand(request));
-//		        login.setModel(ClientInformationUtils.getModel(request));
-//		        login.setScreenSize(ClientInformationUtils.getScreenSize(request));
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//	        
-//	        return logService.create(login);
-//		}
-//	}
+	public class LoginRecordHandler{
+		
+		public Login saveLoginRecord(User currentUser, HttpServletRequest request, HttpServletResponse response) {
+			Login login = new Login();
+	        login.setUser(currentUser);
+	        
+	        try {
+				login.setIpAddress(ClientInformationUtils.getIpAddress(request));
+				login.setOperatingSystem(ClientInformationUtils.getOperatingSystem(request));
+		        login.setBrowser(ClientInformationUtils.getBrowser(request));
+		        login.setBrand(ClientInformationUtils.getBrand(request));
+		        login.setModel(ClientInformationUtils.getModel(request));
+		        login.setScreenSize(ClientInformationUtils.getScreenSize(request));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	        
+	        return logService.create(login);
+		}
+	}
 }

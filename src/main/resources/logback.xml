@@ -117,12 +117,10 @@
         <appender-ref ref="file—error" />
     </logger>
   
-    <!-- 为Hibernate SQL定制的配置 -->  
-    <!-- 
-    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />  
-    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG" />  
-    <logger name="org.hibernate.SQL" level="DEBUG" />  
+    <!-- 为Hibernate SQL定制的配置 -->
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE"/>
+	<logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="TRACE"/>
+<!--     <logger name="org.hibernate.SQL" level="DEBUG" />   -->
     <logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />  
     <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />
-     --> 
 </configuration>

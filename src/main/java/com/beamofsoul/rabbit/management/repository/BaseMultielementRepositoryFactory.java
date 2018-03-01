@@ -5,6 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.persistence.EntityManager;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @ClassName BaseMultielementRepositoryFactory
  * @Description 创建BaseMultielementRepository实现类的BaseMultielementRepositoryProvider实例
@@ -12,6 +14,7 @@ import javax.persistence.EntityManager;
  * @Date 2017年8月29日 下午4:23:17
  * @version 1.0.0
  */
+@Component
 public class BaseMultielementRepositoryFactory implements BaseMultielementRepositoryProvider {
 	
 	private Class<?> domainClass;

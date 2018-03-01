@@ -1,4 +1,4 @@
-package com.beamofsoul.rabbit.management.util;
+package com.beamofsoul.rabbit.management.system;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import lombok.NonNull;
 public class ConfigurationReader {
 	
 	private static final Map<String, Object> CONFIG_MAP = new HashMap<String, Object>();
-	public static final String DEFAULT_CONFIGURATION_FILE_PATH = "application.yml";
+	private static final String DEFAULT_CONFIGURATION_FILE_PATH = "application.yml";
 	
 	static {
 		getConfigurations(DEFAULT_CONFIGURATION_FILE_PATH);

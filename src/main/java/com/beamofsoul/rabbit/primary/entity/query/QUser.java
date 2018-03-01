@@ -1,14 +1,21 @@
 package com.beamofsoul.rabbit.primary.entity.query;
 
-import static com.querydsl.core.types.PathMetadataFactory.*;
+import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
-import com.querydsl.core.types.dsl.*;
-
-import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 
+import com.beamofsoul.rabbit.primary.entity.QBaseAbstractEntity;
+import com.beamofsoul.rabbit.primary.entity.QRole;
+import com.beamofsoul.rabbit.primary.entity.Role;
 import com.beamofsoul.rabbit.primary.entity.User;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.PathMetadata;
+import com.querydsl.core.types.dsl.DateTimePath;
+import com.querydsl.core.types.dsl.EntityPathBase;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.core.types.dsl.PathInits;
+import com.querydsl.core.types.dsl.SetPath;
+import com.querydsl.core.types.dsl.StringPath;
 
 
 /**
@@ -33,6 +40,12 @@ public class QUser extends EntityPathBase<User> {
     public final StringPath nickname = createString("nickname");
 
     public final StringPath password = createString("password");
+
+    public final StringPath phone = createString("phone");
+
+    public final StringPath photo = createString("photo");
+
+    public final SetPath<Role, QRole> roles = this.<Role, QRole>createSet("roles", Role.class, QRole.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> status = createNumber("status", Integer.class);
 

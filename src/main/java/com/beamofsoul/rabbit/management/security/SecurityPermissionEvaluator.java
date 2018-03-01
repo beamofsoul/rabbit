@@ -6,6 +6,8 @@ import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import com.beamofsoul.rabbit.management.system.RolePermissionsMapping;
+
 /**
  * @ClassName SecurityPermissionEvaluator
  * @Description {@link org.springframework.security.access.PermissionEvaluator} implementation that customizes the way of evaluating permission.
@@ -28,8 +30,7 @@ public class SecurityPermissionEvaluator implements PermissionEvaluator {
 	 */
 	@Override
 	public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
-		return true;
-//		return RolePermissionsMapping.actionContains(authentication.getAuthorities(), permission);
+		return RolePermissionsMapping.contains(authentication.getAuthorities(), permission);
 	}
 
 	@Override

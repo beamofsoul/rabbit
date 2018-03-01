@@ -26,6 +26,7 @@ public interface BaseMultielementRepository<T, ID extends Serializable> extends 
 	List<T> findByPredicate(Predicate predicate, Long limit);
 	List<T> findByPredicate(Predicate predicate, Long limit, Sort sort);
 	T findOneByPredicate(Predicate predicate);
+	T findOne(ID id);
 	List<T> findByPredicateAndSort(Predicate predicate, Sort sort);
 	long deleteByIds(ID... ids);
 //	Collection<T> bulkSave(Collection<T> entities);
@@ -36,6 +37,7 @@ public interface BaseMultielementRepository<T, ID extends Serializable> extends 
 	Long deleteByPredicate(Predicate predicate);
 	QueryResults<ID> findPageableIds(Pageable pageable);
 	QueryResults<ID> findPageableIds(Pageable pageable, Predicate predicate);
+	QueryResults<ID> findAllIds();
     QueryResults<?> findSpecificDataByPredicate(Predicate predicate, Expression<?>... selects);
 //	PathBuilder<T> getEntityPath();
 }

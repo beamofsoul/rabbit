@@ -7,11 +7,14 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
+
+import com.beamofsoul.rabbit.management.util.SpringUtils;
 
 @Configuration
 @EnableJpaRepositories(
@@ -23,6 +26,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class PrimaryRepositoryConfiguration extends BaseJpaRepositoryConfiguration {
 
 	private static final String JPA_ENTITY_PACKAGE_PATH = "com.beamofsoul.rabbit.primary.entity";
+	private static final String SHARED_ENTITY_MANAGER_CREATOR = "org.springframework.orm.jpa.SharedEntityManagerCreator#0";
 	
 	@Bean("primaryDataSource")
 	@Primary
@@ -32,9 +36,11 @@ public class PrimaryRepositoryConfiguration extends BaseJpaRepositoryConfigurati
 	}
 	
 	@Bean("primaryEntityManager")
+	@DependsOn({"springUtils"}) // ensure SpringUtils has been initialized, before use it
 	@Primary
 	public EntityManager entityManager() {
-		return getEntityManager(entityManagerFactory());
+		sharedEntityManagerCreatorNameSet.add(SHARED_ENTITY_MANAGER_CREATOR);
+		return SpringUtils.getBean(SHARED_ENTITY_MANAGER_CREATOR, EntityManager.class);
 	}
 	
 	@Bean("primaryEntityManagerFactory")

@@ -12,6 +12,8 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.beamofsoul.rabbit.management.util.SpringUtils;
+
 @Configuration
 @EnableJpaRepositories(
 		basePackages={"com.beamofsoul.rabbit.secondary.repository"},
@@ -22,6 +24,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class SecondaryRepositoryConfiguration extends BaseJpaRepositoryConfiguration {
 
 	private static final String JPA_ENTITY_PACKAGE_PATH = "com.beamofsoul.rabbit.secondary.entity";
+	private static final String SHARED_ENTITY_MANAGER_CREATOR = "org.springframework.orm.jpa.SharedEntityManagerCreator#1";
 	
 	@Bean("secondaryDataSource")
 	@ConfigurationProperties(prefix = "spring.datasource.secondary")
@@ -31,7 +34,8 @@ public class SecondaryRepositoryConfiguration extends BaseJpaRepositoryConfigura
 	
 	@Bean("secondaryEntityManager")
 	public EntityManager entityManager() {
-		return getEntityManager(entityManagerFactory());
+		sharedEntityManagerCreatorNameSet.add(SHARED_ENTITY_MANAGER_CREATOR);
+		return SpringUtils.getBean(SHARED_ENTITY_MANAGER_CREATOR, EntityManager.class);
 	}
 	
 	@Bean("secondaryEntityManagerFactory")

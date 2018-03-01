@@ -9,8 +9,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
+import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
 @EnableWebSecurity
@@ -32,17 +36,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private SecretKeyAuthenticationProvider secretKeyAuthenticationProvider;
 	
-//	@Autowired
-////	private org.thymeleaf.templateresolver.TemplateResolver tmeplateResolver;
-//	private ITemplateResolver templateResolver;
-//	
-//	@Bean
-//	public SpringTemplateEngine templateEngine() {
-//		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-//		templateEngine.setTemplateResolver(templateResolver);
-//		templateEngine.addDialect(new SpringSecurityDialect());
-//		return templateEngine;
-//	}
+	@Autowired
+	private AccessDeniedHandler defaultAccessDeniedHandler;
+	
+	@Autowired
+//	private org.thymeleaf.templateresolver.TemplateResolver tmeplateResolver;
+	private ITemplateResolver templateResolver;
+	
+	@Bean
+	public SpringTemplateEngine templateEngine() {
+		SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		templateEngine.setTemplateResolver(templateResolver);
+		templateEngine.addDialect(new SpringSecurityDialect());
+		return templateEngine;
+	}
 	
 	@Bean
 	public TokenBasedRememberMeServices rememberMeServices() {
@@ -51,9 +58,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+		// Just response as 403 when access denied by Ajax
+		http.exceptionHandling().accessDeniedHandler(defaultAccessDeniedHandler);
+		
 		http.csrf().disable().authorizeRequests()
-		.antMatchers(props.getNonAuthenticatedMatchers()).permitAll()
 		.antMatchers(props.getAdminRoleMatchers()).hasAnyRole(props.getAdminRoles())
+		.antMatchers(props.getNonAuthenticatedMatchers()).permitAll()
 		.and().formLogin()
 			.loginPage(props.getLoginPage()).permitAll().defaultSuccessUrl(props.getDefaultLoginSuccessUrl(), props.isAlwaysUseDefaultSuccessUrl()).successHandler(authenticationSuccessHandler)
 			.and().logout().logoutUrl(props.getLogoutUrl()).logoutSuccessUrl(props.getDefaultLogoutSuccessUrl())
@@ -70,7 +81,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring().antMatchers(props.getIgnoringMatchers());
 		/**
-		 * 
 		 * 指定WebSecurity中使用自定义PermissionEvaluator
 		 * 否则，网页模板中<sec:authorize access="hasPermission('...','...')">将会失效
 		 */
